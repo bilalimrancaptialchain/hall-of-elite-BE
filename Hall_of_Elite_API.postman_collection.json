@@ -1,0 +1,576 @@
+{
+	"info": {
+		"_postman_id": "hall-of-elite-api-v1",
+		"name": "Hall of Elite API",
+		"description": "Complete API collection for Hall of Elite backend endpoints",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "hall-of-elite"
+	},
+	"item": [
+		{
+			"name": "Health",
+			"item": [
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/health",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"health"
+							]
+						},
+						"description": "Check if the server is running and healthy"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"trader@example.com\",\n  \"password\": \"SecurePass123\",\n  \"displayName\": \"John Trader\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						},
+						"description": "Register a new user account. Password must be at least 8 characters with uppercase, lowercase, and number."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const response = pm.response.json();",
+									"    if (response.data && response.data.token) {",
+									"        pm.environment.set('authToken', response.data.token);",
+									"        pm.environment.set('userId', response.data.user.id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"trader@example.com\",\n  \"password\": \"SecurePass123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login and receive JWT token. Token is stored in environment variable 'authToken'."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout and invalidate session"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Elite Traders",
+			"item": [
+				{
+					"name": "Get All Traders",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/elite/traders?page=1&limit=10&tier=ELITE",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"elite",
+								"traders"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page number (default: 1)"
+								},
+								{
+									"key": "limit",
+									"value": "10",
+									"description": "Items per page (default: 10)"
+								},
+								{
+									"key": "tier",
+									"value": "ELITE",
+									"description": "Filter by tier (optional): BRONZE, SILVER, GOLD, PLATINUM, DIAMOND, ELITE",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Get paginated list of elite traders. Optional tier filter."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trader by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/elite/traders/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"elite",
+								"traders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "trader-uuid-here",
+									"description": "Trader UUID"
+								}
+							]
+						},
+						"description": "Get detailed trader profile by ID"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rewards",
+			"item": [
+				{
+					"name": "Get Trader Rewards",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/rewards/traders/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"rewards",
+								"traders",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "trader-uuid-here",
+									"description": "Trader UUID"
+								}
+							]
+						},
+						"description": "Get reward eligibility for a specific trader"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Get All Tier Configs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/tiers",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"tiers"
+							]
+						},
+						"description": "Get all tier configurations"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tier Config by ID",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/tiers/:id",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"tiers",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "tier-uuid-here",
+									"description": "Tier UUID"
+								}
+							]
+						},
+						"description": "Get specific tier configuration by ID"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Reward Configs",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/admin/rewards",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"admin",
+								"rewards"
+							]
+						},
+						"description": "Get all reward configurations"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "MT5",
+			"item": [
+				{
+					"name": "Get Connection Status",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/mt5/status",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mt5",
+								"status"
+							]
+						},
+						"description": "Get MT5 connection status"
+					},
+					"response": []
+				},
+				{
+					"name": "Connect to MT5",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/mt5/connect",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mt5",
+								"connect"
+							]
+						},
+						"description": "Connect to MT5 server"
+					},
+					"response": []
+				},
+				{
+					"name": "Disconnect from MT5",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/mt5/disconnect",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mt5",
+								"disconnect"
+							]
+						},
+						"description": "Disconnect from MT5 server"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Accounts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/mt5/accounts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mt5",
+								"accounts"
+							]
+						},
+						"description": "Get all MT5 trading accounts"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Trades by Account",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/mt5/trades/:accountId?startDate=2024-01-01&endDate=2024-12-31",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"mt5",
+								"trades",
+								":accountId"
+							],
+							"query": [
+								{
+									"key": "startDate",
+									"value": "2024-01-01",
+									"description": "Start date (ISO 8601 format: YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ)",
+									"disabled": true
+								},
+								{
+									"key": "endDate",
+									"value": "2024-12-31",
+									"description": "End date (ISO 8601 format: YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ)",
+									"disabled": true
+								}
+							],
+							"variable": [
+								{
+									"key": "accountId",
+									"value": "account-id-here",
+									"description": "MT5 Account ID"
+								}
+							]
+						},
+						"description": "Get trades for a specific MT5 account. Optional date range filter."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Scoring",
+			"item": [
+				{
+					"name": "Run Scoring",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{authToken}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/scoring/run",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"scoring",
+								"run"
+							]
+						},
+						"description": "Run the full scoring pipeline: metrics → eligibility → scoring → tier → ranking → snapshot persistence"
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:6200",
+			"type": "string"
+		},
+		{
+			"key": "authToken",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

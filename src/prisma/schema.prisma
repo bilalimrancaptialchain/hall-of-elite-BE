@@ -200,3 +200,34 @@ model Mt5TraderScore {
   @@index([rank])
   @@map("mt5_trader_scores")
 }
+
+model SnapshotRun {
+  id          String           @id @default(uuid())
+  runKey      String           @unique
+  version     String
+  label       String?
+  createdAt   DateTime         @default(now())
+  generatedAt DateTime?
+  traders     TraderSnapshot[]
+
+  @@map("snapshot_runs")
+}
+
+model TraderSnapshot {
+  id               String       @id @default(uuid())
+  snapshotId       String
+  traderId         String
+  externalTraderId String
+  score            Float
+  rank             Int
+  tier             String
+  badges           Json
+  metrics          Json
+  createdAt        DateTime     @default(now())
+  snapshot         SnapshotRun  @relation(fields: [snapshotId], references: [id], onDelete: Cascade)
+
+  @@unique([snapshotId, traderId])
+  @@index([snapshotId])
+  @@index([tier, rank])
+  @@map("trader_snapshots")
+}

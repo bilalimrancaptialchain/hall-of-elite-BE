@@ -138,7 +138,7 @@ export class ScoringService {
       fees: trade.fees,
       closeTime: trade.closeTime as Date,
     }));
-  }
+    }
 
   private computeMetrics(
     storedMetrics: { profitFactor: number; winRate: number; drawdown: number; totalTradingDays: number } | null,
@@ -153,7 +153,7 @@ export class ScoringService {
       totalTrades: derived.totalTrades,
       tradingDays: storedMetrics?.totalTradingDays ?? derived.tradingDays,
     };
-  }
+    }
 
   private deriveMetricsFromTrades(trades: ClosedTrade[]): ScoringMetricsDTO {
     const netResults = trades.map((trade) => trade.profitLoss - trade.fees);
@@ -175,7 +175,7 @@ export class ScoringService {
         winningTrades += 1;
       } else if (net < 0) {
         totalLoss += Math.abs(net);
-      }
+    }
 
       equity += net;
       if (equity > peak) {
@@ -184,7 +184,7 @@ export class ScoringService {
       const drawdown = peak - equity;
       if (drawdown > maxDrawdown) {
         maxDrawdown = drawdown;
-      }
+  }
 
       tradingDaysSet.add(trade.closeTime.toISOString().slice(0, 10));
     });
@@ -231,7 +231,7 @@ export class ScoringService {
       reasons.push(SCORING_REJECTION_REASONS.MAX_DRAWDOWN);
     }
 
-    return {
+        return {
       eligible: reasons.length === 0,
       rejectionReasons: reasons,
     };
@@ -276,8 +276,8 @@ export class ScoringService {
         return tierRule.tier;
       }
     }
-    return null;
-  }
+      return null;
+    }
 
   private rankEligible(results: ScoringResultDTO[]): ScoringResultDTO[] {
     const eligible = results
