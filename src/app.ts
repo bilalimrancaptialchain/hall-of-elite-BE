@@ -16,8 +16,21 @@ import progressRoutes from "./modules/progress/progress.routes";
 export const createApp = (): Express => {
   const app = express();
 
+  const allowedOrigins = [
+    env.CORS_ORIGIN,
+    "https://hall.capitalchain.co",
+    "http://localhost:6100",
+    "http://localhost:3000",
+  ];
+
   app.use(cors({
-    origin: env.CORS_ORIGIN,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   }));
   app.use(express.json());

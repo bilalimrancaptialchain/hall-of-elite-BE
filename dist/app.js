@@ -20,8 +20,21 @@ const scoring_routes_1 = __importDefault(require("./modules/scoring/scoring.rout
 const progress_routes_1 = __importDefault(require("./modules/progress/progress.routes"));
 const createApp = () => {
     const app = (0, express_1.default)();
+    const allowedOrigins = [
+        env_1.env.CORS_ORIGIN,
+        "https://hall.capitalchain.co",
+        "http://localhost:6100",
+        "http://localhost:3000",
+    ];
     app.use((0, cors_1.default)({
-        origin: env_1.env.CORS_ORIGIN,
+        origin: (origin, callback) => {
+            if (!origin || allowedOrigins.includes(origin)) {
+                callback(null, true);
+            }
+            else {
+                callback(new Error("Not allowed by CORS"));
+            }
+        },
         credentials: true,
     }));
     app.use(express_1.default.json());
