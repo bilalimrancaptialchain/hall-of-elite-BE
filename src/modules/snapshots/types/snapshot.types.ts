@@ -1,4 +1,4 @@
-import { TraderTier } from "../../types";
+import { TraderTier } from "../../../types";
 
 export enum SnapshotVersion {
   V1 = "V1",

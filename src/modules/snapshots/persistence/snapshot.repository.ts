@@ -25,8 +25,8 @@ export class SnapshotRepository {
             score: trader.score,
             rank: trader.rank,
             tier: trader.tier,
-            badges: trader.badges,
-            metrics: trader.metrics,
+            badges: trader.badges as unknown as any,
+            metrics: trader.metrics as unknown as any,
           })),
         });
       }
@@ -51,8 +51,8 @@ export class SnapshotRepository {
         score: row.score,
         rank: row.rank,
         tier: row.tier as TraderSnapshot["tier"],
-        badges: row.badges as TraderSnapshot["badges"],
-        metrics: row.metrics as TraderSnapshot["metrics"],
+        badges: row.badges as unknown as TraderSnapshot["badges"],
+        metrics: row.metrics as unknown as TraderSnapshot["metrics"],
         createdAt: row.createdAt,
       })),
     };
@@ -89,8 +89,8 @@ export class SnapshotRepository {
         score: row.score,
         rank: row.rank,
         tier: row.tier as TraderSnapshot["tier"],
-        badges: row.badges as TraderSnapshot["badges"],
-        metrics: row.metrics as TraderSnapshot["metrics"],
+        badges: row.badges as unknown as TraderSnapshot["badges"],
+        metrics: row.metrics as unknown as TraderSnapshot["metrics"],
         createdAt: row.createdAt,
       })),
     };

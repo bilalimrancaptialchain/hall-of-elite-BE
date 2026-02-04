@@ -7,7 +7,7 @@ import { TierConfigEntry, TierLevel } from "./tier.types";
  */
 export const TIER_CONFIG: readonly TierConfigEntry[] = TIER_DEFINITIONS.map(
   (def): TierConfigEntry => ({
-    level: def.id as TierLevel,
+    level: def.id as unknown as TierLevel,
     label: def.label,
     minScore: def.minScore,
     maxScore: def.maxScore ?? 100,

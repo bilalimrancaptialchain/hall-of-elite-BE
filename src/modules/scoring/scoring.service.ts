@@ -91,7 +91,7 @@ export class ScoringService {
     await this.persistScores(ranked);
 
     const summary = this.buildSummary(ranked, eligibleCount, rejectedCount);
-    this.logInfo("Scoring run complete", summary);
+    this.logInfo("Scoring run complete", summary as unknown as Record<string, unknown>);
 
     return { summary, results: ranked };
   }

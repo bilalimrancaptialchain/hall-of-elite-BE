@@ -1,4 +1,4 @@
-import { TIER_CONFIG } from "./tier.config";
+import { TIER_CONFIG } from "../tiers/tier.config";
 import { RankedTrader, TierAssignmentResult, TierLevel } from "./ranking.types";
 
 /**
@@ -6,13 +6,13 @@ import { RankedTrader, TierAssignmentResult, TierLevel } from "./ranking.types";
  */
 export const assignTier = (trader: RankedTrader): TierAssignmentResult => {
   const level =
-    TIER_CONFIG.levels.find(
-      (tier) =>
+    TIER_CONFIG.find(
+      (tier: any) =>
         trader.score >= tier.minScore &&
         (tier.maxScore === null || trader.score <= tier.maxScore)
-    ) ?? TIER_CONFIG.levels[0];
+    ) ?? TIER_CONFIG[0];
 
-  const tier: TierLevel = level.id;
+  const tier: TierLevel = level.level;
 
   const tierReason = `Score ${trader.score.toFixed(
     2

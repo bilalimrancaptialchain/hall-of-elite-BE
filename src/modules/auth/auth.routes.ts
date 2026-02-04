@@ -9,13 +9,13 @@ const router = Router();
 
 router.post(
   "/register",
-  validateRequest(registerSchema),
+  validateRequest({ body: registerSchema.shape.body }),
   asyncHandler(register)
 );
 
 router.post(
   "/login",
-  validateRequest(loginSchema),
+  validateRequest({ body: loginSchema.shape.body }),
   asyncHandler(login)
 );
 

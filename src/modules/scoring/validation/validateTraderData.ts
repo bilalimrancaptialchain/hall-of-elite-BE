@@ -14,8 +14,8 @@ const isNonEmptyString = (value: unknown): value is string =>
   typeof value === "string" && value.trim().length > 0;
 
 const baseContext = (
-  overrides: Partial<Parameters<typeof buildError>[2]>["context"]
-): Parameters<typeof buildError>[2] => ({
+  overrides?: Partial<{ traderId?: string; field?: string }>
+): any => ({
   domain: "TRADER" as ValidationDomain,
   ...overrides,
 });
@@ -23,7 +23,7 @@ const baseContext = (
 const buildError = (
   code: ValidationErrorCode,
   message: string,
-  context?: Parameters<typeof baseContext>[0]
+  context?: any
 ): ValidationError => ({
   code,
   message,

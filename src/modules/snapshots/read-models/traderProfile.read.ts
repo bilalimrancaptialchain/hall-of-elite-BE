@@ -53,7 +53,7 @@ export const getTraderProfileFromLatestSnapshot = async (
     score: row.score,
     rank: row.rank,
     tier: row.tier as TraderTier,
-    badges: row.badges as TraderSnapshotBadges,
-    metrics: row.metrics as TraderSnapshotMetricsSummary,
+    badges: row.badges as unknown as TraderSnapshotBadges,
+    metrics: row.metrics as unknown as TraderSnapshotMetricsSummary,
   };
 };

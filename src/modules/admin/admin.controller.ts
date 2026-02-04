@@ -48,7 +48,7 @@ export const getTierConfigById = async (
   next: NextFunction
 ) => {
   try {
-    const { id } = req.params;
+    const id = Array.isArray(req.params.id) ? req.params.id[0] : req.params.id;
     const config = await adminService.getTierConfigById(id);
 
     if (!config) {

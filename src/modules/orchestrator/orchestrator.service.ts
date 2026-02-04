@@ -5,6 +5,7 @@ import { assignTierFromScore } from "../scoring/tiers";
 import { rankTraders } from "../scoring/ranking";
 import { SnapshotService, SnapshotMetadata, TraderSnapshotInput, SnapshotVersion } from "../snapshots";
 import { TraderTier } from "../../types";
+import { TierLevel } from "../scoring/tiers/tier.types";
 import { withRetry, splitIntoBatches } from "./orchestrator.utils";
 import {
   OrchestratorOptions,

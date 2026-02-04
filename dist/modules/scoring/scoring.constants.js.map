@@ -1,0 +1,1 @@
+{"version":3,"file":"scoring.constants.js","sourceRoot":"","sources":["../../../src/modules/scoring/scoring.constants.ts"],"names":[],"mappings":";;;AAAa,QAAA,aAAa,GAAG,gBAAgB,CAAC;AAEjC,QAAA,yBAAyB,GAAG;IACvC,cAAc,EAAE,gBAAgB;IAChC,eAAe,EAAE,iBAAiB;IAClC,gBAAgB,EAAE,kBAAkB;IACpC,gBAAgB,EAAE,kBAAkB;IACpC,iBAAiB,EAAE,mBAAmB;IACtC,YAAY,EAAE,cAAc;IAC5B,YAAY,EAAE,cAAc;CACpB,CAAC"}

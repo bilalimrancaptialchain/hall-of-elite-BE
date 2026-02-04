@@ -22,9 +22,6 @@ export class TraderService {
       // Try to fetch from database first
       const traderScore = await prisma.traderScore.findUnique({
         where: { tradingAccountId: id },
-        include: {
-          // Note: Adjust based on actual Prisma schema relationships
-        },
       });
 
       if (!traderScore) {

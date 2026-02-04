@@ -10,8 +10,8 @@ const isFiniteNumber = (value: unknown): value is number =>
   typeof value === "number" && Number.isFinite(value);
 
 const baseContext = (
-  overrides: Partial<Parameters<typeof buildError>[2]>["context"]
-): Parameters<typeof buildError>[2] => ({
+  overrides?: Partial<{ traderId?: string; field?: string; index?: number }>
+): any => ({
   domain: "METRICS" as ValidationDomain,
   ...overrides,
 });
@@ -19,7 +19,7 @@ const baseContext = (
 const buildError = (
   code: ValidationErrorCode,
   message: string,
-  context?: Parameters<typeof baseContext>[0]
+  context?: any
 ): ValidationError => ({
   code,
   message,
